@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18387151, g: 0.22901219, b: 0.30307543, a: 1}
+  m_IndirectSpecularColor: {r: 0.18373373, g: 0.2291359, b: 0.30468512, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -120,7 +120,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &330872077
+--- !u!1 &1354248274
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,8 +128,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 330872079}
-  - component: {fileID: 330872078}
+  - component: {fileID: 1354248276}
+  - component: {fileID: 1354248275}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -137,13 +137,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &330872078
+--- !u!108 &1354248275
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330872077}
+  m_GameObject: {fileID: 1354248274}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 1
@@ -159,8 +159,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.12
-    m_NormalBias: 0.65
+    m_Bias: 0.05
+    m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
       e00: 1
@@ -199,22 +199,22 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &330872079
+--- !u!4 &1354248276
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330872077}
+  m_GameObject: {fileID: 1354248274}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.28666234, y: 0.109044604, z: -0.75058746, w: 0.5852798}
-  m_LocalPosition: {x: 3.45, y: 6.57, z: 3.91}
+  m_LocalRotation: {x: 0.14716949, y: 0.23781238, z: -0.83803576, w: 0.4684895}
+  m_LocalPosition: {x: -2.156, y: 3.849, z: -1.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 29.95, y: -20.447, z: -109.632}
---- !u!1 &955604810
+  m_LocalEulerAnglesHint: {x: 32.445, y: -1.619, z: -122.058}
+--- !u!1 &1642539593
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,10 +222,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 955604814}
-  - component: {fileID: 955604813}
-  - component: {fileID: 955604812}
-  - component: {fileID: 955604811}
+  - component: {fileID: 1642539596}
+  - component: {fileID: 1642539595}
+  - component: {fileID: 1642539594}
+  - component: {fileID: 1642539597}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -233,53 +233,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &955604811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955604810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 029e3830609919a4f8a5154539e29c45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shader: {fileID: 4800000, guid: 03134ed06fe7e6342963b3a6e575d487, type: 3}
-  _maxDistance: 73.6
-  _mainColor: {r: 0.19996434, g: 0.21926117, b: 0.7735849, a: 0.9254902}
-  _sphere1: {x: 0, y: 5, z: 0, w: 2.9}
-  _box1: {x: 0, y: 5, z: 0, w: 2.59}
-  _sphere2: {x: 0, y: 5, z: 0, w: 3.4}
-  _boxSphereSmooth: 1.337
-  _sphereInteresectSmooth: 0.05
-  _box1Round: 0.17
-  _directionalLight: {fileID: 330872079}
-  _LightCol: {r: 0.038768206, g: 0.9339623, b: 0, a: 1}
-  _LightIntensity: 0.67
-  _ShadowIntensity: 2.46
-  _ShadowPenumbra: 3.56
-  _ShadowDistance: {x: 0.02, y: 100}
-  _Accuracy: 0.028
-  _MaxIterations: 200
-  _AmbientOcclusionIterations: 2
-  _AmbientOcclusionStepSize: 0.77
-  _AmbientOcclusionIntensity: 0.235
---- !u!81 &955604812
+--- !u!81 &1642539594
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955604810}
+  m_GameObject: {fileID: 1642539593}
   m_Enabled: 1
---- !u!20 &955604813
+--- !u!20 &1642539595
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955604810}
+  m_GameObject: {fileID: 1642539593}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -304,7 +272,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.5
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -324,24 +292,43 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &955604814
+--- !u!4 &1642539596
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955604810}
+  m_GameObject: {fileID: 1642539593}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0001470569, y: 0.07506993, z: -0.0019534028, w: 0.99717635}
-  m_LocalPosition: {x: -3, y: 10, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 0, z: 3.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 8.611, z: -0.224}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1642539597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642539593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa9194948cd9a94c8c55d11a1b7459c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 4800000, guid: 8e76c9ebb24cd3b4a999665dbf90fb90, type: 3}
+  _maxDistance: 100
+  _mainColor: {r: 0.17236361, g: 0.9150943, b: 0.09841575, a: 0}
+  _sphere1: {x: -0.06, y: -0.03, z: 0, w: 2}
+  _directionalLight: {fileID: 1354248276}
+  _LightCol: {r: 0.8962264, g: 0.80743957, b: 0.13866138, a: 1}
+  _LightIntensity: 0.35
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 955604814}
-  - {fileID: 330872079}
+  - {fileID: 1642539596}
+  - {fileID: 1354248276}
