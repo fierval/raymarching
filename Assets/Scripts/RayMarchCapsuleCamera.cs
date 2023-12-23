@@ -4,21 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera)), ExecuteAlways]
-public class RayMarchCamera : SceneViewFilter {
+public class RayMarchCapsuleCamera : SceneViewFilter {
     [SerializeField]
     private Shader _shader;
     public float _maxDistance;
     public Color _mainColor;
 
     [Header("3D Objects")]
-    public Vector4 _sphere1 = new Vector4(0, 0, 0, 2);
-    public Vector4 _box1 = new Vector4(0, 0, 0, 2);
-    public Vector4 _sphere2 = new Vector4(0, 0, 0, 2);
-
-    [Header("Smoothing")]
-    public float _boxSphereSmooth;
-    public float _sphereInteresectSmooth;
-    public float _box1Round;
+    public Vector4[] _capsule1 = new Vector4[2];
 
     [Header("Lighting")]
     public Transform _directionalLight;
@@ -36,13 +29,6 @@ public class RayMarchCamera : SceneViewFilter {
     [Range(64, 500)]
     public int _MaxIterations;
 
-    [Header("Ambient Occlusion")]
-    [Range(1, 5)]
-    public int _AmbientOcclusionIterations;
-    [Range(0.01f, 10f)]
-    public float _AmbientOcclusionStepSize;
-    [Range(0,1)]
-    public float _AmbientOcclusionIntensity;
 
     public Material _raymarchMaterial {
         get {
@@ -114,18 +100,11 @@ public class RayMarchCamera : SceneViewFilter {
 
     private void SetShaderProps() {
         _raymarchMaterial.SetVector("_LightDir", _directionalLight ? _directionalLight.forward : Vector3.down);
-        _raymarchMaterial.SetMatrix("_CamFrustrum", CamFrustrum(_camera));
+        _raymarchMaterial.SetVectorArray("_CamFrustrum", CamFrustrum(_camera));
         _raymarchMaterial.SetMatrix("_CamToWorld", _camera.cameraToWorldMatrix);
         _raymarchMaterial.SetFloat("_maxDistance", _maxDistance);
-        _raymarchMaterial.SetVector("_sphere1", _sphere1);
-        _raymarchMaterial.SetVector("_sphere2", _sphere2);
-        _raymarchMaterial.SetVector("_box1", _box1);
         _raymarchMaterial.SetColor("_mainColor", _mainColor);
         _raymarchMaterial.SetColor("_LightCol", _LightCol);
-
-        _raymarchMaterial.SetFloat("_box1Round", _box1Round);
-        _raymarchMaterial.SetFloat("_boxSphereSmooth", _boxSphereSmooth);
-        _raymarchMaterial.SetFloat("_sphereInteresectSmooth", _sphereInteresectSmooth);
 
         _raymarchMaterial.SetFloat("_LightIntensity", _LightIntensity);
         _raymarchMaterial.SetVector("_ShadowDistance", _ShadowDistance);
@@ -135,14 +114,14 @@ public class RayMarchCamera : SceneViewFilter {
         _raymarchMaterial.SetFloat("_Accuracy", _Accuracy);
         _raymarchMaterial.SetInt("_MaxIterations", _MaxIterations);
 
-        _raymarchMaterial.SetFloat("_AmbientOcclusionStepSize", _AmbientOcclusionStepSize);
-        _raymarchMaterial.SetFloat("_AmbientOcclusionIntensity", _AmbientOcclusionIntensity);
-        _raymarchMaterial.SetInt("_AmbientOcclusionIterations", _AmbientOcclusionIterations);
+        _raymarchMaterial.SetVectorArray("_capsule1", _capsule1);
+
+
 
     }
 
-    private Matrix4x4 CamFrustrum(Camera cam) {
-        Matrix4x4 frustrum = Matrix4x4.identity;
+    protected Vector4[] CamFrustrum(Camera cam) {
+
         float fov = Mathf.Tan((cam.fieldOfView * 0.5f) * Mathf.Deg2Rad);
         float nearPlane = cam.nearClipPlane;
 
@@ -154,10 +133,7 @@ public class RayMarchCamera : SceneViewFilter {
         Vector3 BR = (-Vector3.forward * nearPlane + goRight - goUp);
         Vector3 BL = (-Vector3.forward * nearPlane - goRight - goUp);
 
-        frustrum.SetRow(0, TL);
-        frustrum.SetRow(1, TR);
-        frustrum.SetRow(2, BR);
-        frustrum.SetRow(3, BL);
+        Vector4[] frustrum = new Vector4[4] { TL, TR, BR, BL };
 
         return frustrum;
     }

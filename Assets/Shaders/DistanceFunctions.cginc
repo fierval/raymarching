@@ -40,6 +40,12 @@ float opIS(float d1, float d2, float k) {
     return lerp(d2, d1, h) + k * h * (1.0 - h);
 }
 
+float sdCapsule(float3 p, float3 a, float3 b, float r) {
+    float3 ap = p - a, ab = b - a;
+    float h = clamp(dot(ab, ap) / dot(ab, ab), 0.0, 1.0);
+    float3 c = a + h * ab;
+    return length(p-c) - r;
+}
 
 // BOOLEAN OPERATORS //
 

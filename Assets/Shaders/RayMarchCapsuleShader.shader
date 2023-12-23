@@ -21,23 +21,17 @@ Shader "Hidden/RayMarchCapsuleShader"
 
             sampler2D _MainTex;
             sampler2D _CameraDepthTexture;
-            float4x4 _CamFrustrum, _CamToWorld;
+            float4x4 _CamToWorld;
+            float4 _CamFrustrum[4];
             float _maxDistance;
-            float4 _sphere1, _box1, _sphere2;
+            float4 _capsule1[2];
             float3 _LightDir, _LightCol;
             fixed4 _mainColor;
             float3 _modInterval;
-            float _box1Round;
-            float _boxSphereSmooth;
-            float _sphereInteresectSmooth;
             float _LightIntensity;
             float2 _ShadowDistance;
             float _ShadowIntensity, _ShadowPenumbra;
             
-            float _AmbientOcclusionStepSize;
-            int _AmbientOcclusionIterations;
-            float _AmbientOcclusionIntensity;
-
             int _MaxIterations;
             float _Accuracy;
 
@@ -67,29 +61,21 @@ Shader "Hidden/RayMarchCapsuleShader"
                 o.ray = mul(_CamToWorld, o.ray);
                 return o;
             }
-            float BoxSphere(float3 p) {
-                float Sphere1 = sdSphere(p - _sphere1.xyz, _sphere1.w);
-                float Box1 = sdRoundBox(p - _box1.xyz, _box1.www, _box1Round);
-                float combine1 = opSS(Sphere1, Box1, _boxSphereSmooth);
-    
-                float Sphere2 = sdSphere(p - _sphere2.xyz, _sphere2.w);
-                float combine2 = opIS(Sphere2, combine1, _sphereInteresectSmooth);
-                return combine2;
-            }
 
             float distanceField(float3 p) {
-                float ground = sdPlane(p, float4(0, 1, 0, 0));
-                float boxSphere1 = BoxSphere(p);
     
-                return opU(ground, boxSphere1);
+                float ground = sdPlane(p, float4(0, 1, 0, 0));
+                float capsule1 = sdCapsule(p, _capsule1[0].xyz, _capsule1[1].xyz, _capsule1[1].w);
+
+                return opU(ground, capsule1);
             }
             
             float3 getNormal(float3 p) {
                 const float2 offset = float2(0.001, 0.0);
                 float3 n = float3(
-                    distanceField(p + offset.xyy) - distanceField(p - offset.xyy),
-                    distanceField(p + offset.yxy) - distanceField(p - offset.yxy),
-                    distanceField(p + offset.yyx) - distanceField(p - offset.yyx)
+                    distanceField(p + offset.xyy),
+                    distanceField(p + offset.yxy),
+                    distanceField(p + offset.yyx)
                     );
                 return normalize(n);
             }
@@ -118,18 +104,6 @@ Shader "Hidden/RayMarchCapsuleShader"
                 }
                 return result;
             }
-            float AmbientOcclusion(float3 p, float3 n) {
-                float step = _AmbientOcclusionStepSize;
-                float ao = 0.0;
-                float intensity = _AmbientOcclusionIntensity;
-                float dist;
-                int max_iterations = _AmbientOcclusionIterations;
-                for(int i = 1; i <= max_iterations; i++) {
-                    dist = step * i;
-                    ao += max(0.0, (dist - distanceField(p + n * dist)) / dist);
-                }
-                return (1 - ao * intensity);
-            }
 
             float3 Shading(float3 p, float3 n) {
                 float3 result;
@@ -142,9 +116,8 @@ Shader "Hidden/RayMarchCapsuleShader"
                 // Shadows
                 float shadow = softShadow(p, -_LightDir, _ShadowDistance.x, _ShadowDistance.y, _ShadowPenumbra) * 0.5 + 0.5;
                 shadow = max(0.0, pow(shadow, _ShadowIntensity));
-                // Ambient Occlusion
-                float ao = AmbientOcclusion(p, n);
-                result = color * light * shadow * ao;
+    
+                result = color * light * shadow;
                 return result;
             }
 
